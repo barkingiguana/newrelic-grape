@@ -58,7 +58,7 @@ DependencyDetection.defer do
       alias_method :origin_use, :use
 
       def use(middleware, *args, &block)
-        if middleware == Grape::Middleware::Error
+        if middleware == Grape::Middleware::Error || middleware.instance_variable_get(:@middleware_class) == Grape::Middleware::Error
           use ::NewRelic::Agent::Instrumentation::Grape
         end
         origin_use(middleware, *args, &block)
